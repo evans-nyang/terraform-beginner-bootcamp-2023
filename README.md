@@ -205,6 +205,12 @@ This command i.e `terraform apply`, will run a plan and pass the changeset for e
 
 Provide an auto approve flag to automatically approve an apply command e.g `terraform apply --auto-approve`
 
+#### Terraform Destroy
+
+Use the command `terraform destroy` to delete and get rid of provisioned cloud service resources.
+
+Append the auto approve flag to accept deletion when prompted e.g `terraform apply --auto-approve`
+
 ### Terraform Lock File
 
 `terraform.lock.hcl` contains the locked versioning for the providers or modules used within the project.
