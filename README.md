@@ -230,3 +230,52 @@ Loss of this file leads to loss of knowledge about the terraform state.
 ### Terraform Directory
 
 `.terraform` directory contains binaries of terraform providers.
+
+## Issues 
+
+### Terraform Cloud Login and Gitpod Workspace
+
+Attempting to run `terraform login` will launch a bash a window display to generate a token, however it does not always work as expected in Gitpod VSCode browser.
+
+The workable alternative is to manually generate a token in Terraform Cloud.
+
+```
+https://app.terraform.io/app/settings/tokens?source=terraform-login
+```
+
+Then create and open the credentials file manually as shown below:
+
+```sh
+touch /hom/gitpod/.terraform.d/credentials.tfrc.json
+open /home/gitpod/.terraform.d/credentials.tfrc.json
+```
+
+Provide the following code (replace your token in the file):
+
+```json
+{
+  "credentials": {
+    "app.terraform.io": {
+      "token": "YOUR-TERRAFORM-CLOUD-TOKEN"
+    }
+  }
+}
+```
+
+### AWS credentials authentication in Terraform Cloud
+
+When trying `terraform plan` there might arise an issue with credential sources when trying to authenticate with AWS.
+
+To resolve this issue, you should configure AWS credentials in Terraform Cloud as shown in the steps below:
+
+- In Terraform Cloud:
+  + Go to your Terraform Cloud organization.
+  + Navigate to the workspace where you are running this configuration (terra-house-1).
+  + Click on "Settings" in the workspace menu.
+  + Under the "General" tab, find the "Environment Variables" section.
+  + Add AWS Credentials:
+- Add two environment variables:
+  + AWS_ACCESS_KEY_ID: Set this to your AWS access key.
+  + AWS_SECRET_ACCESS_KEY: Set this to your AWS secret key.
+- Save Changes:
+  + Save the changes.
