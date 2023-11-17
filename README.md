@@ -262,6 +262,8 @@ Provide the following code (replace your token in the file):
 }
 ```
 
+Automate this process with the following bash script [bin/generate_tfrc_credentials](bin/generate_tfrc_credentials)
+
 ### AWS credentials authentication in Terraform Cloud
 
 When trying `terraform plan` there might arise an issue with credential sources when trying to authenticate with AWS.
