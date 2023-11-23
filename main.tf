@@ -1,23 +1,23 @@
-# resource "random_string" "bucket_name" {
-#   length = 32
-#   lower  = true
-#   upper  = false
-#   numeric = true
-#   special = false
+terraform {
+  # backend "remote" {
+  #   hostname     = "app.terraform.io"
+  #   organization = "exampro-terraform"
 
-#   # Use the keepers argument to associate the user_uuid variable with the random_string resource.
-#   keepers = {
-#     user_uuid = var.user_uuid
+  #   workspaces {
+  #     name = "terra-house-1"
+  #   }
+  # }
+#   cloud {
+#     organization = "exampro-terraform"
+
+#     workspaces {
+#       name = "terra-house-1"
+#     }
 #   }
-# }
-
-resource "aws_s3_bucket" "website_bucket" {
-  bucket = var.bucket_name
-
-  tags = {
-    UserUuid = var.user_uuid
-  }
 }
 
-
-
+module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+  user_uuid = var.user_uuid
+  bucket_name = var.bucket_name
+}

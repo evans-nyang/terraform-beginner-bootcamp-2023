@@ -54,3 +54,41 @@ In the case of lost statefile, tear down all your cloud infrastructure manually.
 ### Fix Manual Configurarion 
 
 If a resource is deleted or modified manually, try running `Terraform plan` to put the infrastructure back into the expected state fixing the configuration drift.
+
+### Fix using Terraform Refresh
+```sh
+terraform apply -refresh-only -auto-approve
+```
+
+## Terraform Modules
+
+### Terraform Module Structure
+
+It is recommended to place modules in a `modules` directory during local developments.
+
+### Pasing Input Variables
+
+Pass input variables to your module.
+The module has to declare the terraform variable in its own variables.tf.
+```tf
+module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+  user_uuid = var.user_uuid
+  bucket_name = var.bucket_name
+}
+```
+
+### Module Sources
+
+Use the source to import modules from various places e.g
+- locally
+- Github
+- Terraform Registry
+
+```tf
+module "terrahouse_aws" {
+  source = "./modules/terrahouse_aws"
+}
+```
+
+[Module Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
