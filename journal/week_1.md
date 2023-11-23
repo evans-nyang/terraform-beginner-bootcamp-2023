@@ -39,3 +39,18 @@ Append the `-var` flag to set an input variable or override a variable in the tf
 
 To set lots of variables, it is more convenient to specify their values in a variable definitions file (with a filename ending in either .tfvars or .tfvars.json) and then specify that file on the command line with -var-file e.g `terraform apply -var-file="testing.tfvars"`
 
+## Dealing With Configuration Drift
+
+In the case of lost statefile, tear down all your cloud infrastructure manually.
+
+`Terraform port` is an option but doesn't apply for all cloud resources, instead check the terraform providers documentation for which resources support import.
+
+### Fix Missing Resources with Terraform Import
+
+`terraform import aws_s3_bucket.bucket bucket-name`
+
+[Terraform Import](https://developer.hashicorp.com/terraform/cli/import)
+
+### Fix Manual Configurarion 
+
+If a resource is deleted or modified manually, try running `Terraform plan` to put the infrastructure back into the expected state fixing the configuration drift.
