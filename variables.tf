@@ -1,27 +1,7 @@
-variable "region" {
-  description = "Name of the aws region"
-  default     = "eu-west-1"
-}
-
 variable "user_uuid" {
   type        = string
-  description = "The UUID of the user."
-
-  validation {
-    condition     = can(regex("^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$", var.user_uuid))
-    error_message = "Invalid UUID format. Please provide a valid UUID."
-  }
 }
 
 variable "bucket_name" {
-  description = "The name of the s3 bucket"
   type        = string
-
-  validation {
-    condition = (
-      length(var.bucket_name) >= 3 && length(var.bucket_name) <= 63 &&
-      can(regex("^[a-z0-9][a-z0-9-.]*[a-z0-9]$", var.bucket_name))
-    )
-    error_message = "The bucket name must be between 3 and 63 characters!"
-  }
 }
