@@ -37,4 +37,4 @@ terraform.rc
 *.env*
 
 # Terraform variables
-*variables.tf
+# *variables.tf
