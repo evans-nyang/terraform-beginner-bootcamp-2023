@@ -141,3 +141,44 @@ resource "aws_s3_object" "website_index" {
   etag   = filemd5("${path.root}/public/index.html")
 }
 ```
+
+### Working with JSON using jsonencode
+
+`jsonencode` encodes a given value to a string using JSON syntax.
+
+Example : 
+
+```tf
+> jsonencode({"hello"="world"})
+{"hello":"world"}
+```
+
+[jsonencode](https://developer.hashicorp.com/terraform/language/functions/jsonencode)
+
+## Terraform Locals
+
+A local value assigns a name to an expression, so you can use the name multiple times within a module instead of repeating the expression.
+
+Example usage: 
+
+```tf
+locals {
+  s3_origin_id = "myS3Origin"
+}
+```
+
+[Local Values](https://developer.hashicorp.com/terraform/language/values/locals)
+
+## Terraform Data Sources
+
+Data sources allow Terraform to use information defined outside of Terraform, defined by another separate Terraform configuration, or modified by functions.
+
+```tf
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+```
+
+[Data Sources](https://developer.hashicorp.com/terraform/language/data-sources)

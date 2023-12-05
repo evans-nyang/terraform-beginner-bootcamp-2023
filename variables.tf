@@ -14,5 +14,4 @@ variable "index_html_filepath" {
 variable "error_html_filepath" {
   description = "File path for error.html"
   type        = string
-  
 }
