@@ -92,3 +92,52 @@ module "terrahouse_aws" {
 ```
 
 [Module Sources](https://developer.hashicorp.com/terraform/language/modules/sources)
+
+## Considerations when using chatGPT to write Terraform 
+
+LLMs e.g chatGPT may not be cognisant of latest Terraform documentation. It may likely generate depracated configuration examples affecting providers.
+
+## Working with files in Terraform 
+
+### Fileexists function
+
+`fileexists` is a built-in terraform function to check existence of a file.
+
+Check out the example usage in a variable block below: 
+
+```
+variable "index_html_filepath" {
+  description = "File path for index.html"
+  type        = string
+
+  validation {
+    condition     = fileexists(var.index_html_filepath)
+    error_message = "Invalid path for index.html!"
+  }
+}
+```
+
+[Learn about fileexists](https://developer.hashicorp.com/terraform/language/functions/fileexists)
+
+### Filemd5
+
+`filemd5` is a built-in function, variant of `md5`, that hashes the contents of a given file rather than a literal string
+
+[Learn about filemd5](https://developer.hashicorp.com/terraform/language/functions/filemd5)
+
+### Path Variable
+There is a special variable `path` in Terraform that allows referencing local paths as shown in the examples below:
+- path.module = filesystem path of the module where the expression is placed.
+- path.root = filesystem path of the root module of the configuration.
+- path.cwd = filesystem path of the original working directory before any `-chdir` argument
+
+[Special Path Variable](https://developer.hashicorp.com/terraform/language/expressions/references#filesystem-and-workspace-info)
+
+```tf
+resource "aws_s3_object" "website_index" {
+  bucket = aws_s3_bucket.website_bucket.bucket
+  key    = "index.html"
+  source = "${path.root}/public/index.html"
+  etag   = filemd5("${path.root}/public/index.html")
+}
+```
