@@ -182,3 +182,15 @@ output "account_id" {
 ```
 
 [Data Sources](https://developer.hashicorp.com/terraform/language/data-sources)
+
+### Resource Lifecycle
+
+`lifecycle` is a nested block that can appear within a resource block. The `lifecycle` block and its contents are meta-arguments, available for all resource blocks regardless of type.
+
+[Meta Arguments Lifecycle](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle)
+
+## Terraform Data
+
+Plain data values such as Local Values and Input Variables don't have any side-effects to plan against and so they aren't valid in replace_triggered_by. You can use terraform_data's behavior of planning an action each time input changes to indirectly use a plain value to trigger replacement.
+
+[Learn more about Terraform Data ](https://developer.hashicorp.com/terraform/language/resources/terraform-data)
