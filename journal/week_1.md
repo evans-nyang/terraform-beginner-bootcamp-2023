@@ -247,3 +247,22 @@ resource "aws_instance" "web" {
 ```
 
 [Learn more about remote-exec](https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec)
+
+## Terraform Expressions
+
+### For
+
+A `for` expression creates a complex type value by transforming another complex type value. Each element in the input value can correspond to either one or zero values in the result, and an arbitrary expression can be used to transform each input element into an output element.
+
+For example, if var.list were a list of strings, then the following expression would produce a tuple of strings with all-uppercase letters:
+```sh
+[for s in var.list : upper(s)]
+```
+
+[for expression](https://developer.hashicorp.com/terraform/language/expressions/for)
+
+### For Each
+
+The `for_each` meta-argument accepts a map or a set of strings, and creates an instance for each item in that map or set.
+
+[Learn more about for_each](https://developer.hashicorp.com/terraform/language/meta-arguments/for_each)
