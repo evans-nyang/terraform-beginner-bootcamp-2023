@@ -194,3 +194,56 @@ output "account_id" {
 Plain data values such as Local Values and Input Variables don't have any side-effects to plan against and so they aren't valid in replace_triggered_by. You can use terraform_data's behavior of planning an action each time input changes to indirectly use a plain value to trigger replacement.
 
 [Learn more about Terraform Data ](https://developer.hashicorp.com/terraform/language/resources/terraform-data)
+
+## Provisioners
+
+Provisioners allow execution of commands on compute instances e.g AWS CLI command.
+
+Though not recommended for use by hashicorp because Configuration management tools like Ansible are a better fit, the functionality exists.
+
+[Learn about provisioners](https://developer.hashicorp.com/terraform/language/resources/provisioners/syntax)
+
+### Local-exec
+
+This will execute command on the machine running terraform e.g plan, apply
+
+```tf
+resource "aws_instance" "web" {
+  #...
+
+  provisioner "local-exec" {
+    command    = "echo The server's IP address is ${self.private_ip}"
+    on_failure = continue
+  }
+}
+```
+
+[Learn more about local-exec](https://developer.hashicorp.com/terraform/language/resources/provisioners/local-exec)
+
+### Remote-exec 
+
+This will execute ccommands on the target machine. You will need to provide credentials e.g ssh to gain access to the machine.
+
+```tf
+resource "aws_instance" "web" {
+  #...
+
+  # Establishes connection used by all
+  # generic remote provisioners (i.e file/remote-exec)
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = var.root_password
+    host     = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "puppet apply",
+      "consul join ${aws_instance.web.private_ip}",
+    ]
+  }
+}
+```
+
+[Learn more about remote-exec](https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec)
